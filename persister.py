@@ -1,6 +1,7 @@
 import pickle
 from seriesData.library import Library
 from tracking.user import User
+from genericpath import exists
 
 
 SAVE_FILE_NAME = "data"
@@ -19,7 +20,8 @@ class Persister:
 
     @staticmethod
     def load() -> 'Persister':
-        lib = None
-        with open(SAVE_FILE_NAME, "rb") as fileStream:
-            lib = pickle.load(fileStream)
+        lib = Persister()
+        if exists(SAVE_FILE_NAME):
+            with open(SAVE_FILE_NAME, "rb") as fileStream:
+                lib = pickle.load(fileStream)
         return lib
