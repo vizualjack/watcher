@@ -4,6 +4,10 @@ from tracking.user import User
 from tracking.watchInfo import WatchInfo
 import time
 import keyboard
+import os
+
+
+WatchInfos = list[WatchInfo]
 
 
 class ConsoleUI:
@@ -16,10 +20,10 @@ class ConsoleUI:
         while True:
             self.__printOptions()
             option = input()
-            if option == "":
+            if option == "e":
                 return
             elif option == "l":
-                while option != "":
+                while option != "b":
                     self.__printLibraryOptions()
                     option = input()
                     if option == "c":
@@ -29,14 +33,13 @@ class ConsoleUI:
                     elif option == "e":
                         self.__editSeriesList()
             elif option == "u":
-                while option != "":
+                while option != "b":
                     self.__printUserOptions()
                     option = input()
                     if option == "as":
                         series = self.__selectSeries()
                         input(series.name + " selected")
                         confirm = input("Wanna add? y/n: ")
-                        print("confirm: " + confirm)
                         if confirm == "y":
                             if self.user.addSeries(series):
                                 print("Added series to user")
@@ -51,9 +54,49 @@ class ConsoleUI:
                             print("Removed series!")
                     elif option == "ls":
                         self.__printWatchInfos(self.user.watchInfos)
+                    elif option == "wm":
+                        watchInfo = self.__selectWatchInfo()
+                        while option != "e":
+                            os.system("cls")
+                            print("Watch mode")
+                            self.__printWatchInfo(watchInfo)
+                            self.__printWatchModeOptions()
+                            option = input()
+                            if option == "n":
+                                watchInfo.nextEpisode()
+                            elif option == "se":
+                                print("Episodes in season 1-" + str(watchInfo.getSeasonEpisodes()))
+                                newEpisode = int(input())
+                                if newEpisode > 0 and newEpisode <= watchInfo.getSeasonEpisodes():
+                                    watchInfo.episode = newEpisode
+                            elif option == "sb":
+                                numOfSeasons = len(watchInfo.series.seasons)
+                                watchInfo.season = 1
+                                if numOfSeasons > 1:
+                                    print("Seasons 1-" + str(numOfSeasons))
+                                    newSeason = int(input())
+                                    if newSeason > 0 and newSeason <= numOfSeasons:
+                                        watchInfo.season = newEpisode
+                                print("Episodes in season 1-" + str(watchInfo.getSeasonEpisodes()))
+                                newEpisode = int(input())
+                                if newEpisode > 0 and newEpisode <= watchInfo.getSeasonEpisodes():
+                                    watchInfo.episode = newEpisode
+                        
+
+    def __printWatchModeOptions(self):
+        print("Next episode - n")
+        print("Set episode - se")
+        print("Set season and episode - sb")
+        print("End - e")
 
 
-    def __printWatchInfos(self, watchInfos:WatchInfo):
+    def __printWatchInfo(self, watchInfo:WatchInfo):
+        print(watchInfo.getSeries().name)
+        print("Season " + str(watchInfo.getSeason()))
+        print("Episode " + str(watchInfo.getEpisode()) + "/" + str(watchInfo.getSeasonEpisodes()))
+
+
+    def __printWatchInfos(self, watchInfos:WatchInfos):
         if len(watchInfos) == 0:
             print("No series in your list")
         for watchInfo in watchInfos:
@@ -64,17 +107,21 @@ class ConsoleUI:
         print("Add series - as")
         print("Remove series - rs")
         print("List series - ls")
+        print("Watch mode - wm")
+        print("Back - b")
 
 
     def __printOptions(self):
         print("User - u")
         print("Library - l")
+        print("Save and end - e")
 
 
     def __printLibraryOptions(self):
         print("List series - l")
         print("Create series - c")
         print("Edit series - e")
+        print("Back - b")
 
 
     def __createSeries(self):
@@ -114,8 +161,10 @@ class ConsoleUI:
         series = self.__selectSeries()
         print("Edit " + series.name)
         self.__printEditOptions()
-        option = input("")
-        if option == "":
+        option = ""
+        while option == "":
+            option = input("")
+        if option == "b":
             return
         elif option == "r":
             newName = input("New name: ")
@@ -186,6 +235,7 @@ class ConsoleUI:
         print("Change season - cs")
         print("Add season - as")
         print("Delete season - delete")
+        print("Back - b")
 
 
     def __printSeasons(self, series:Series):

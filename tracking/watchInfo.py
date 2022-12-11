@@ -21,6 +21,13 @@ class WatchInfo:
         return self.season
 
 
+    def getSeasonEpisodes(self) -> int:
+        self.__checkForNewSeason()
+        curSeasonIndex = self.season-1
+        season = self.series.seasons[curSeasonIndex]
+        return season.episodes
+
+
     def nextEpisode(self):
         curSeasonIndex = self.season-1
         if curSeasonIndex >= len(self.series.seasons):
