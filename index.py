@@ -1,7 +1,9 @@
 from tracking.user import User
 from seriesData.library import Library
 from persister import Persister
-from ui.consoleUi import ConsoleUI
+from ui.console.consoleUi import ConsoleUI
+from ui.console.inputHandler import InputHandler
+from ui.console.command import Command
 
 
 if __name__ == "__main__":

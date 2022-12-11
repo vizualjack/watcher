@@ -38,8 +38,10 @@ class ConsoleUI:
                         confirm = input("Wanna add? y/n: ")
                         print("confirm: " + confirm)
                         if confirm == "y":
-                            self.user.addSeries(series)
-                            print("Added series to user")
+                            if self.user.addSeries(series):
+                                print("Added series to user")
+                            else:
+                                print("Series already in list")
                     elif option == "rs":
                         watchInfo = self.__selectWatchInfo()
                         input()
