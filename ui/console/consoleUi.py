@@ -18,14 +18,17 @@ class ConsoleUI:
     
     def use(self):
         while True:
+            os.system("cls")
             self.__printOptions()
             option = input()
+            os.system("cls")
             if option == "e":
                 return
             elif option == "l":
                 while option != "b":
                     self.__printLibraryOptions()
                     option = input()
+                    os.system("cls")
                     if option == "c":
                         self.__createSeries()
                     elif option == "l":
@@ -38,7 +41,11 @@ class ConsoleUI:
                 while option != "b":
                     self.__printUserOptions()
                     option = input()
+                    os.system("cls")
                     if option == "as":
+                        if len(self.library.series) == len(self.user.watchInfos):
+                            print("No non watched series")
+                            continue
                         series = self.__selectNonWatchedSeries()
                         input(series.name + " selected")
                         confirm = input("Wanna add? y/n: ")
@@ -57,8 +64,11 @@ class ConsoleUI:
                     elif option == "ls":
                         self.__printWatchInfos(self.user.watchInfos)
                     elif option == "wm":
+                        if len(self.user.watchInfos) == 0:
+                            print("No series in watch list")
+                            continue
                         watchInfo = self.__selectWatchInfo()
-                        while option != "e":
+                        while option != "b":
                             os.system("cls")
                             print("Watch mode")
                             self.__printWatchInfo(watchInfo)
@@ -83,13 +93,18 @@ class ConsoleUI:
                                 newEpisode = int(input())
                                 if newEpisode > 0 and newEpisode <= watchInfo.getSeasonEpisodes():
                                     watchInfo.episode = newEpisode
+                            elif option == "sn":
+                                print("Save and end")
+                                return
                         
 
     def __printWatchModeOptions(self):
+        print("")
         print("Next episode - n")
         print("Set episode - se")
         print("Set season and episode - sb")
-        print("End - e")
+        print("Save and end - sn")
+        print("Back - b")
 
 
     def __printWatchInfo(self, watchInfo:WatchInfo):
@@ -106,6 +121,7 @@ class ConsoleUI:
 
 
     def __printUserOptions(self):
+        print("")
         print("Add series - as")
         print("Remove series - rs")
         print("List series - ls")
@@ -114,12 +130,14 @@ class ConsoleUI:
 
 
     def __printOptions(self):
+        print("")
         print("User - u")
         print("Library - l")
         print("Save and end - e")
 
 
     def __printLibraryOptions(self):
+        print("")
         print("List series - l")
         print("List non watched series - lnw")
         print("Create series - c")
@@ -232,6 +250,7 @@ class ConsoleUI:
 
     
     def __printSeasonEditOptions(self):
+        print("")
         print("Change name - n")
         print("Change episodes - e")
         print("Delete season - delete")
@@ -243,6 +262,7 @@ class ConsoleUI:
 
     
     def __printEditOptions(self):
+        print("")
         print("Rename - r")
         print("Change season - cs")
         print("Add season - as")
@@ -289,7 +309,7 @@ class ConsoleUI:
 
 
     def __getNonWatchedSeries(self):
-        seriesList = [Series]
+        seriesList = []
         for series in self.library.series:
             if self.user.getWatchInfoForSeries(series) == None:
                 seriesList.append(series)
