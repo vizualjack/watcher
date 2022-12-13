@@ -127,7 +127,7 @@ class ConsoleUI:
         print(watchInfo.getSeries().name)
         print("Season: " + str(watchInfo.getSeason()))
         print("Episode: " + str(watchInfo.getEpisode()) + "/" + str(watchInfo.getSeasonEpisodes()))
-        watchLocation = watchInfo.watchLocation
+        watchLocation = watchInfo.getWatchLocation()
         if watchLocation == "":
             watchLocation = "No watch location entered"
         print("Watch location: " + watchLocation)

@@ -29,8 +29,18 @@ class WatchInfo:
         return season.episodes
 
     
+    def getWatchLocation(self) -> str:
+        try:
+            return self.watchLocation
+        except:
+            return ""
+
+    
     def watchLocationIsWebLink(self) -> bool:
-        return self.watchLocation.startswith("https://") or self.watchLocation.startswith("http://")
+        try:
+            return self.watchLocation.startswith("https://") or self.watchLocation.startswith("http://")
+        except:
+            return False
 
 
     def nextEpisode(self):
