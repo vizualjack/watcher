@@ -18,9 +18,10 @@ class User:
     
     def addSeries(self, series):
         if self.getWatchInfoForSeries(series) == None:
-            self.watchInfos.append(WatchInfo(series))
-            return True
-        return False
+            watchInfo = WatchInfo(series)
+            self.watchInfos.append(watchInfo)
+            return watchInfo
+        return None
 
 
     def removeSeries(self, series):

@@ -5,6 +5,7 @@ from tracking.watchInfo import WatchInfo
 import time
 import keyboard
 import os
+import webbrowser
 
 
 WatchInfos = list[WatchInfo]
@@ -50,8 +51,13 @@ class ConsoleUI:
                         input(series.name + " selected")
                         confirm = input("Wanna add? y/n: ")
                         if confirm == "y":
-                            if self.user.addSeries(series):
+                            watchInfo = self.user.addSeries(series)
+                            if watchInfo != None:
                                 print("Added series to user")
+                                print("(Optional) Add watch location: ", end="")
+                                watchLocation = input()
+                                if watchLocation != None and watchLocation != "":
+                                    watchInfo.watchLocation = watchLocation
                             else:
                                 print("Series already in list")
                     elif option == "rs":
@@ -72,10 +78,12 @@ class ConsoleUI:
                             os.system("cls")
                             print("Watch mode")
                             self.__printWatchInfo(watchInfo)
-                            self.__printWatchModeOptions()
+                            self.__printWatchModeOptions(watchInfo.watchLocationIsWebLink())
                             option = input()
                             if option == "n":
                                 watchInfo.nextEpisode()
+                            elif option == "o" and watchInfo.watchLocationIsWebLink():
+                                webbrowser.open(watchInfo.watchLocation)
                             elif option == "se":
                                 print("Episodes in season 1-" + str(watchInfo.getSeasonEpisodes()))
                                 newEpisode = int(input())
@@ -96,21 +104,33 @@ class ConsoleUI:
                             elif option == "sn":
                                 print("Save and end")
                                 return
+                            elif option == "swl":
+                                print("Watch location: ", end="")
+                                watchLocation = input()
+                                if watchLocation != None and watchLocation != "":
+                                    watchInfo.watchLocation = watchLocation
                         
 
-    def __printWatchModeOptions(self):
+    def __printWatchModeOptions(self, watchLocationIsWebLink):
         print("")
+        if watchLocationIsWebLink:
+            print("Open watch location - o")
         print("Next episode - n")
         print("Set episode - se")
         print("Set season and episode - sb")
+        print("Set watch location - swl")
         print("Save and end - sn")
         print("Back - b")
 
 
     def __printWatchInfo(self, watchInfo:WatchInfo):
         print(watchInfo.getSeries().name)
-        print("Season " + str(watchInfo.getSeason()))
-        print("Episode " + str(watchInfo.getEpisode()) + "/" + str(watchInfo.getSeasonEpisodes()))
+        print("Season: " + str(watchInfo.getSeason()))
+        print("Episode: " + str(watchInfo.getEpisode()) + "/" + str(watchInfo.getSeasonEpisodes()))
+        watchLocation = watchInfo.watchLocation
+        if watchLocation == "":
+            watchLocation = "No watch location entered"
+        print("Watch location: " + watchLocation)
 
 
     def __printWatchInfos(self, watchInfos:WatchInfos):

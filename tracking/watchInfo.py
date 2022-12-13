@@ -5,6 +5,7 @@ class WatchInfo:
         self.series = series
         self.season = 1
         self.episode = 1
+        self.watchLocation = ""
 
 
     def getSeries(self) -> Series:
@@ -26,6 +27,10 @@ class WatchInfo:
         curSeasonIndex = self.season-1
         season = self.series.seasons[curSeasonIndex]
         return season.episodes
+
+    
+    def watchLocationIsWebLink(self) -> bool:
+        return self.watchLocation.startswith("https://") or self.watchLocation.startswith("http://")
 
 
     def nextEpisode(self):
