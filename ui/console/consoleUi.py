@@ -30,6 +30,8 @@ class ConsoleUI:
                         self.__createSeries()
                     elif option == "l":
                         self.__listSeries()
+                    elif option == "lnw":
+                        self.__listNonWatchedSeries()
                     elif option == "e":
                         self.__editSeriesList()
             elif option == "u":
@@ -119,6 +121,7 @@ class ConsoleUI:
 
     def __printLibraryOptions(self):
         print("List series - l")
+        print("List non watched series - lnw")
         print("Create series - c")
         print("Edit series - e")
         print("Back - b")
@@ -152,6 +155,15 @@ class ConsoleUI:
             return
         for series in self.library.series:
             print(series.name)
+
+    
+    def __listNonWatchedSeries(self):
+        if len(self.library.series) == 0:
+            print("No series")
+            return
+        for series in self.library.series:
+            if self.user.getWatchInfoForSeries(series) == None:
+                print(series.name)
 
 
     def __editSeriesList(self):
