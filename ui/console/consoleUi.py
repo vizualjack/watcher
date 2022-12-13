@@ -39,7 +39,7 @@ class ConsoleUI:
                     self.__printUserOptions()
                     option = input()
                     if option == "as":
-                        series = self.__selectSeries()
+                        series = self.__selectNonWatchedSeries()
                         input(series.name + " selected")
                         confirm = input("Wanna add? y/n: ")
                         if confirm == "y":
@@ -256,14 +256,13 @@ class ConsoleUI:
             seasonNum = seasonIndex+1
             print(str(seasonNum) + ". " + season.name + " | " + str(season.episodes) + " episodes")
 
-    
-    def __selectSeries(self):
-        seriesList = self.library.series
+
+    def __selectSeriesInList(self, seriesList):
         selectedIndex = 0
         print("Use arrow and enter key to select series")
         time.sleep(0.1)
         while True:
-            selectedSeries = self.library.series[selectedIndex]
+            selectedSeries = seriesList[selectedIndex]
             name = selectedSeries.name
             name += " "*100
             print(name, end='\r')
@@ -279,6 +278,22 @@ class ConsoleUI:
                 selectedIndex = 0
             elif selectedIndex < 0:
                 selectedIndex = len(seriesList)-1
+
+    
+    def __selectSeries(self):
+        return self.__selectSeriesInList(self.library.series)
+
+
+    def __selectNonWatchedSeries(self):
+        return self.__selectSeriesInList(self.__getNonWatchedSeries())
+
+
+    def __getNonWatchedSeries(self):
+        seriesList = [Series]
+        for series in self.library.series:
+            if self.user.getWatchInfoForSeries(series) == None:
+                seriesList.append(series)
+        return seriesList
 
 
     def __selectWatchInfo(self):
