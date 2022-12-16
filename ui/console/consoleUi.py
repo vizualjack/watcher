@@ -299,13 +299,13 @@ class ConsoleUI:
 
     def __selectSeriesInList(self, seriesList):
         selectedIndex = 0
-        print("Use arrow and enter key to select series")
+        
         time.sleep(0.1)
         while True:
             selectedSeries = seriesList[selectedIndex]
-            name = selectedSeries.name
-            name += " "*100
-            print(name, end='\r')
+            os.system("cls")
+            print("Use arrow and enter key to select series")
+            print(selectedSeries.name)
             pressedKey = keyboard.read_key()
             time.sleep(0.1)
             if pressedKey == "enter":
@@ -338,14 +338,13 @@ class ConsoleUI:
 
     def __selectWatchInfo(self):
         watchInfos = self.user.watchInfos
-        selectedIndex = 0
-        print("Use arrow and enter key to select series")
+        selectedIndex = 0        
         time.sleep(0.1)
         while True:
             selectedWatchInfo = self.user.watchInfos[selectedIndex]
-            name = selectedWatchInfo.series.name
-            name += " "*100
-            print(name, end='\r')
+            os.system("cls")
+            print("Use arrow and enter key to select series")
+            print(selectedWatchInfo.series.name, end='\r')
             pressedKey = keyboard.read_key()
             time.sleep(0.1)
             if pressedKey == "enter":
