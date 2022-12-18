@@ -73,7 +73,7 @@ class ConsoleUI:
                         if len(self.user.watchInfos) == 0:
                             print("No series in watch list")
                             continue
-                        watchInfo = self.__selectWatchInfo()
+                        watchInfo = self.__selectWatchInfo(True)
                         while option != "b":
                             os.system("cls")
                             print("Watch mode")
@@ -101,7 +101,7 @@ class ConsoleUI:
                                 newEpisode = int(input())
                                 if newEpisode > 0 and newEpisode <= watchInfo.getSeasonEpisodes():
                                     watchInfo.episode = newEpisode
-                            elif option == "sn":
+                            elif option == "sae":
                                 print("Save and end")
                                 return
                             elif option == "swl":
@@ -119,7 +119,7 @@ class ConsoleUI:
         print("Set episode - se")
         print("Set season and episode - sb")
         print("Set watch location - swl")
-        print("Save and end - sn")
+        print("Save and end - sae")
         print("Back - b")
 
 
@@ -298,8 +298,7 @@ class ConsoleUI:
 
 
     def __selectSeriesInList(self, seriesList):
-        selectedIndex = 0
-        
+        selectedIndex = 0        
         time.sleep(0.1)
         while True:
             selectedSeries = seriesList[selectedIndex]
@@ -336,12 +335,18 @@ class ConsoleUI:
         return seriesList
 
 
-    def __selectWatchInfo(self):
+    def __selectWatchInfo(self, skipWatched=False):
         watchInfos = self.user.watchInfos
+        if skipWatched:
+            watchInfosNonWatched = []
+            for watchInfo in watchInfos:
+                if watchInfo.unseenEpisodes():
+                    watchInfosNonWatched.append(watchInfo)
+            watchInfos = watchInfosNonWatched
         selectedIndex = 0        
         time.sleep(0.1)
         while True:
-            selectedWatchInfo = self.user.watchInfos[selectedIndex]
+            selectedWatchInfo = watchInfos[selectedIndex]
             os.system("cls")
             print("Use arrow and enter key to select series")
             print(selectedWatchInfo.series.name, end='\r')
