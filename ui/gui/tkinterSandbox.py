@@ -1,5 +1,5 @@
 import customtkinter
-from series import Series
+from seriesData.series import Series
 
 root = None
 
