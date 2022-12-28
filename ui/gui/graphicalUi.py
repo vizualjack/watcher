@@ -13,11 +13,12 @@ class GraphicalUI:
         ctk.set_appearance_mode("dark")
         ctk.set_default_color_theme("blue")
         self.rootWindow = ctk.CTk()
+        self.rootWindow.geometry("600x500")
         self.rootWindow.wm_title('Watcher')
         ctk.CTkButton(self.rootWindow, text='Switch', command=self.__switchWindow).pack()
         self.currentFrame = ListFrame(self.rootWindow)
         self.currentFrame.pack()
-        # self.rootWindow.resizable(0, 0)
+        pass
 
 
     def __switchWindow(self):
