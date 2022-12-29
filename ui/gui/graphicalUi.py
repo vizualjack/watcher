@@ -15,10 +15,9 @@ class GraphicalUI:
         self.rootWindow = ctk.CTk()
         self.rootWindow.geometry("600x500")
         self.rootWindow.wm_title('Watcher')
-        ctk.CTkButton(self.rootWindow, text='Switch', command=self.__switchWindow).pack()
+        # ctk.CTkButton(self.rootWindow, text='Switch', command=self.__switchWindow).pack()
         self.currentFrame = ListFrame(self.rootWindow)
         self.currentFrame.pack()
-        pass
 
 
     def __switchWindow(self):
