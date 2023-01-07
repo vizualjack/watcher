@@ -21,6 +21,10 @@ class WatchInfo:
         self.__checkForNewSeason()
         return self.season
 
+    
+    def getSeriesSeasons(self) -> int:
+        return len(self.series.seasons)
+
 
     def getSeasonEpisodes(self) -> int:
         self.__checkForNewSeason()

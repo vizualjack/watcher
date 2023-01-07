@@ -27,7 +27,7 @@ class AniSearch:
             loadResult.extractedSeasons.append(ExtractedSeason(episodes, loadResult.name))
             self.__loadSequelSeasons(loadResult)
         except Exception as ex:
-            print("Struggle on load stuff from: " + loadResult.link)
+            print("Exception on extracting infos from: " + loadResult.link)
             print(ex.with_traceback())
         return loadResult
 

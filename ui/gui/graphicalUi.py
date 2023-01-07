@@ -3,6 +3,7 @@ from tracking.user import User
 from seriesData.library import Library
 from seriesData.series import Series
 from seriesData.season import Season
+from tracking.watchInfo import WatchInfo
 from anisearch.anisearch import AniSearch, SearchResult
 import eel
 
@@ -13,6 +14,7 @@ class GraphicalUI:
         gui = self
         self.user = user
         self.library = library
+        self.seriesList = list()
         self.searchResult = SearchResult()
         self.selectedSeries: Series = None
         self.loadBase = ""
@@ -50,19 +52,46 @@ def convertSeriesToDict(series: Series):
     return seriesDict
 
 
+def convertWatchInfoToDict(watchInfo: WatchInfo):
+    watchInfoDict = dict()
+    if watchInfo:
+        watchInfoDict["season"] = watchInfo.getSeason()
+        watchInfoDict["maxSeason"] = watchInfo.getSeriesSeasons()
+        watchInfoDict["episode"] = watchInfo.getEpisode()
+        watchInfoDict["maxEpisode"] = watchInfo.getSeasonEpisodes()
+        # watchInfoDict["watchLocation"] = watchInfo.getWatchLocation()
+    return watchInfoDict
+
+
+def convertSeriesListToDict(seriesList: list()):
+    dictList = list()
+    for series in seriesList:
+        dictList.append(convertSeriesToDict(series))
+    return dictList
+
+
 # web functions
 @eel.expose
-def getSeries():
-    seriesList = list()
-    for series in gui.library.series:
-        seriesList.append(convertSeriesToDict(series))
-    return seriesList
+def getSeries(listName):
+    gui.seriesList.clear()
+    if listName == "watchList":
+        for watchInfo in gui.user.watchInfos:
+            gui.seriesList.append(watchInfo.getSeries())
+    else:
+        for series in gui.library.series:
+            gui.seriesList.append(series)
+    return convertSeriesListToDict(gui.seriesList)
 
 
 @eel.expose
 def selectSeries(index):
-    gui.selectedSeries = gui.library.series[index]
+    gui.selectedSeries = gui.seriesList[index]
     gui.loadBase = "list"
+
+
+@eel.expose
+def getWatchInfo():
+    return convertWatchInfoToDict(gui.user.getWatchInfoForSeries(gui.selectedSeries))
 
 
 @eel.expose

@@ -31,7 +31,6 @@ header {
   width: 300px;
   height: 425px;
   border-radius: 5px;
-  background-color: lightgray;
 }
 
 header name {
@@ -52,4 +51,20 @@ header seasons {
 desc {
   display: block;
   padding: 5px;
+}
+
+watchInfo {
+  position: absolute;
+  top: 100px;
+  right: 137px;
+  display: block;
+  width: 200px;
+  background-color: gray;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+watchInfo p {
+  margin: 0 0 10px 0;
+  text-align: center;
 }

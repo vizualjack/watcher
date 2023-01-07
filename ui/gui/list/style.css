@@ -34,7 +34,7 @@ series {
   border-radius: 5px;
   width: 300px;
   height: 425px;
-  background-color: lightgray;
+  background-color: gray;
   overflow: hidden;
   float: left;
 }
