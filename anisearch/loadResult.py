@@ -1,4 +1,4 @@
-from extractedSeason import ExtractedSeason
+from .extractedSeason import ExtractedSeason
 
 
 ExtractedSeasons = list[ExtractedSeason]

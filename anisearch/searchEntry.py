@@ -1,4 +1,5 @@
-from anisearchLoader import load
+from .anisearchLoader import load
+import base64
 
 BASE_LINK = "https://cdn.anisearch.com/images/"
 class SearchEntry:
@@ -8,8 +9,9 @@ class SearchEntry:
         self.link = link
 
     
-    def __downloadImage(self, link) -> bytes:
+    def __downloadImage(self, link) -> str:
         bigImageLink = link.replace("full/", "")
         bigImageLink = bigImageLink.replace(".webp", "_300.webp")
         bigImageLink = f"{BASE_LINK}{bigImageLink}"
-        return load(bigImageLink)
+        base64Image = base64.b64encode(load(bigImageLink)).decode()
+        return f"data:image/webp;base64,{base64Image}"

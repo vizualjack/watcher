@@ -1,3 +1,4 @@
+# pyinstaller --onefile index.py --name Watcher
 from persister import Persister
 # from ui.console.consoleUi import ConsoleUI
 from ui.gui.graphicalUi import GraphicalUI

@@ -1,9 +1,9 @@
 from bs4 import BeautifulSoup
-from anisearchLoader import load
-from searchEntry import SearchEntry
-from loadResult import LoadResult
-from extractedSeason import ExtractedSeason
-from relation import Relation
+from .anisearchLoader import load
+from .searchEntry import SearchEntry
+from .loadResult import LoadResult
+from .extractedSeason import ExtractedSeason
+from .relation import Relation
 import json
 
 
@@ -16,12 +16,19 @@ class AniSearch:
     def loadFromSearchEntry(self, searchEntry: SearchEntry) -> LoadResult:
         loadResult = LoadResult(searchEntry.name, searchEntry.link, searchEntry.image)
         pageLoader = self.__loadPage(loadResult.link)
-        loadResult.desc = pageLoader.find("div", attrs={"class": "textblock details-text", "lang": "en"}).text  #<div lang="en" class="textblock details-text">
-        infoblock = pageLoader.find("ul", attrs={"class": "xlist row simple infoblock"})
-        episodes = infoblock.find("div", attrs={"class": "type"}).text
-        episodes = episodes.split(" ")[2]
-        loadResult.extractedSeasons.append(ExtractedSeason(episodes, loadResult.name))
-        self.__loadSequelSeasons(loadResult)
+        try:
+            loadResult.desc = ""
+            descEle = pageLoader.find("div", attrs={"class": "textblock details-text", "lang": "en"})
+            if descEle:
+                loadResult.desc = descEle.contents[0].text
+            infoblock = pageLoader.find("ul", attrs={"class": "xlist row simple infoblock"})
+            episodes = infoblock.find("div", attrs={"class": "type"}).text
+            episodes = episodes.split(" ")[2]
+            loadResult.extractedSeasons.append(ExtractedSeason(episodes, loadResult.name))
+            self.__loadSequelSeasons(loadResult)
+        except Exception as ex:
+            print("Struggle on load stuff from: " + loadResult.link)
+            print(ex.with_traceback())
         return loadResult
 
         
@@ -55,7 +62,7 @@ class AniSearch:
         return linkElement.get("data-bg")
     
     def __getLinkFromLinkElement(self, linkElement):
-        return linkElement.get("href").replace("anime/", "")
+        return linkElement.get("href").replace("anime/", "https://www.anisearch.com/anime/")
 
 
     def __loadSequelSeasons(self, loadResult:LoadResult):
@@ -100,6 +107,8 @@ class AniSearch:
         splitted = titleString.split("<span>")
         name = splitted[0]
         episodes = splitted[1].split(", ")[1].split(" ")[0]
+        if episodes == "?":
+            episodes = -1
         return ExtractedSeason(episodes, name)
 
 

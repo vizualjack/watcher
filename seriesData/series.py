@@ -8,6 +8,9 @@ class Series:
     def __init__(self, name: str) -> None:
         self.name = name
         self.seasons = SeasonList()
+        self.image = ""
+        self.desc = ""
+        self.link = ""
 
 
     def addSeason(self, episodes, name=None):

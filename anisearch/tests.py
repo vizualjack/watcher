@@ -20,9 +20,6 @@ class Tests(unittest.TestCase):
         self.assertIsNotNone(saoEntry)
         self.assertNotEqual(len(saoEntry.image), 0, "no image")
         self.assertNotEqual(len(saoEntry.link), 0, "no link")
-        with open("image.webp", "wb") as file:
-            file.write(saoEntry.image)
-            file.close()
 
     
     def test_load(self):
