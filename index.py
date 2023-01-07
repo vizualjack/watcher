@@ -7,5 +7,6 @@ from ui.gui.graphicalUi import GraphicalUI
 if __name__ == "__main__":
     persister = Persister.load()
     ui = GraphicalUI(persister.user, persister.library)
+    ui.onClose = persister.save
     ui.use()
-    persister.save()
+    # persister.save()

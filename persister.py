@@ -14,6 +14,7 @@ class Persister:
 
 
     def save(self):
+        print("saving...")
         with open(SAVE_FILE_NAME, "wb") as fileStream:
             pickle.dump(self, fileStream)
             

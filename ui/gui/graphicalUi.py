@@ -21,8 +21,17 @@ class GraphicalUI:
         eel.init("./ui/gui")
 
     
+    def close(self, route, param2):
+        print("close")
+        print(route)
+        print()
+        # if self.onClose:
+        #     self.onClose()
+        # exit()
+
+    
     def use(self):
-        eel.start('list/page.html')
+        eel.start('list/page.html', size=(500,500), close_callback=self.close)
 
 
 # gui object for web functions
@@ -132,3 +141,25 @@ def getSearchResult():
 @eel.expose
 def getBackLink():
     return f"/{gui.loadBase}/page.html"
+
+
+@eel.expose
+def setSeason(newSeason):
+    watchInfo = gui.user.getWatchInfoForSeries(gui.selectedSeries)
+    try: 
+        newSeason = int(newSeason)
+        watchInfo.season = newSeason
+    except:
+        print("Can't set season")       
+    return convertWatchInfoToDict(watchInfo)
+
+
+@eel.expose
+def setEpisode(newEpisode):
+    watchInfo = gui.user.getWatchInfoForSeries(gui.selectedSeries)
+    try: 
+        newEpisode = int(newEpisode)
+        watchInfo.episode = newEpisode
+    except:
+        print("Can't set episode")
+    return convertWatchInfoToDict(watchInfo)

@@ -1,3 +1,8 @@
+wSeasonEle = document.getElementById("wSeason");
+wEpisodeEle = document.getElementById("wEpisode");
+watchInfoEle = document.getElementById("watchInfo");
+
+
 function back() {
     window.location.href = backLink;
 }
@@ -19,12 +24,50 @@ async function loadSeries() {
         if (!watchInfo.episode) {
             return 
         }
-        document.getElementById("wSeason").innerHTML = "Season " + watchInfo.season + "/" + watchInfo.maxSeason;
-        document.getElementById("wEpisode").innerHTML = "Episode " + watchInfo.episode + "/" + watchInfo.maxEpisode;
-        document.getElementById("watchInfo").style.display = "block";
-        
-    //   <span id="wSeason">Season 1/2</span>
-    //   <span id="wEpisode">Episode 1/2</span>
+        wSeasonEle.innerHTML = "Season " + watchInfo.season + "/" + watchInfo.maxSeason;
+        wEpisodeEle.innerHTML = "Episode " + watchInfo.episode + "/" + watchInfo.maxEpisode;
+        watchInfoEle.style.display = "block";
     });
 }
+
+function showSetSeason(event) {
+    btn = event.target;
+    wSeasonEle.innerHTML = "";
+    inputEle = document.createElement("input");
+    inputEle.type = "text";
+    wSeasonEle.appendChild(inputEle);
+    btn.setAttribute("onclick", "setSeason(event)");
+    btn.innerHTML = "Set season";
+}
+
+function setSeason(event) {
+    newSeason = wSeasonEle.children[0].value;
+    eel.setSeason(newSeason)(function(watchInfo){
+        btn = event.target;
+        wSeasonEle.innerHTML = "Season " + watchInfo.season + "/" + watchInfo.maxSeason;
+        btn.setAttribute("onclick","showSetSeason(event)");
+        btn.innerHTML = "Edit season";
+    });    
+}
+
+function showSetEpisode(event) {
+    btn = event.target;
+    wEpisodeEle.innerHTML = "";
+    inputEle = document.createElement("input");
+    inputEle.type = "text";
+    wEpisodeEle.appendChild(inputEle);
+    btn.setAttribute("onclick", "setEpisode(event)");
+    btn.innerHTML = "Set Episode";
+}
+
+function setEpisode(event) {
+    newEpisode = wEpisodeEle.children[0].value;
+    eel.setEpisode(newEpisode)(function(watchInfo){
+        btn = event.target;
+        wEpisodeEle.innerHTML = "Episode " + watchInfo.episode + "/" + watchInfo.maxEpisode;
+        btn.setAttribute("onclick","showSetEpisode(event)");
+        btn.innerHTML = "Edit Episode";
+    });    
+}
+
 loadSeries();
