@@ -28,7 +28,8 @@ if __name__ == "__main__":
             watchInfo.series = newSeries
         newSeriesList.append(newSeries)
         transformedSeries += 1
-    persister.library.series = newSeriesList
+    if len(newSeriesList) > 0:
+        persister.library.series = newSeriesList
     # persister.library.series.clear()
     # for series in newSeriesList:
     #     persister.library.series.append(series)
