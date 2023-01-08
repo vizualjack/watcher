@@ -17,7 +17,10 @@ class AniSearch:
         loadResult = LoadResult(link)
         pageLoader = self.__loadPage(loadResult.link)
         try:
-            imageLink = pageLoader.find("img", attrs={"id": "details-cover"}).get("src")
+            # imageLink = pageLoader.find("img", attrs={"id": "details-cover"}).get("src")
+            animeId = link.replace("https://www.anisearch.com/anime/", "").split(",")[0]
+            subId = animeId[:-3]
+            imageLink = f"https://cdn.anisearch.com/images/anime/cover/{subId}/{animeId}_300.webp"
             loadResult.loadImage(imageLink)
             loadResult.name = pageLoader.find("h1", attrs={"id": "htitle"}).text
             loadResult.desc = ""
@@ -27,7 +30,9 @@ class AniSearch:
                 for content in descEle.contents:
                     if not content.name:
                         loadResult.desc += content
-                    elif content.name == "a":
+                    else:
+                        if (content.name == "i" and 'class="hidden"' in str(content)) or content.name == "div":
+                            continue
                         loadResult.desc += content.text
             infoblock = pageLoader.find("ul", attrs={"class": "xlist row simple infoblock"})
             episodes = infoblock.find("div", attrs={"class": "type"}).text.split(", ")

@@ -3,18 +3,14 @@ from anisearchEx.anisearch import AniSearch
 from seriesData.series import Series
 
 
-if __name__ == "__main__":
+if __name__ == "__main__":    
     persister = Persister.load()
     newSeriesList = list()
     transformedSeries = 0
     for series in persister.library.series:
-        try:
-            if series.link != "":
-                continue
-        except:
-            pass
         inputLink = input(f"Link for {series.name}: ")
         if len(inputLink) == 0:
+            newSeriesList.append(series)
             continue
         loadResult = AniSearch().loadFromLink(inputLink)
         newSeries = Series(loadResult.name)
@@ -30,8 +26,5 @@ if __name__ == "__main__":
         transformedSeries += 1
     if len(newSeriesList) > 0:
         persister.library.series = newSeriesList
-    # persister.library.series.clear()
-    # for series in newSeriesList:
-    #     persister.library.series.append(series)
     print(f"Transformed {transformedSeries} series")
     persister.save()

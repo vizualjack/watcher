@@ -139,9 +139,9 @@ def getWatchInfo():
 @eel.expose
 def loadSeries(index):
     searchEntry = gui.searchResult[index]
-    addInfo = AniSearch().loadFromSearchEntry(searchEntry)
-    newSeries = Series(searchEntry.name)
-    newSeries.image = searchEntry.image
+    addInfo = AniSearch().loadFromLink(searchEntry.link)
+    newSeries = Series(addInfo.name)
+    newSeries.image = addInfo.image
     newSeries.desc = addInfo.desc
     newSeries.link = searchEntry.link
     for exSeason in addInfo.extractedSeasons:
