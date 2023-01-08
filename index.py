@@ -1,7 +1,7 @@
-# pyinstaller --onefile index.py --name Watcher --icon ui/gui/icon.ico
+
 from persister import Persister
-# from ui.console.consoleUi import ConsoleUI
-from ui.gui.graphicalUi import GraphicalUI
+# from ui.console.consoleUi import ConsoleUI # pyinstaller index.py --name Watcher --onefile --icon=icon.ico
+from ui.gui.graphicalUi import GraphicalUI # python -m eel index.py ui/gui/ --onefile --noconsole
 
 
 if __name__ == "__main__":

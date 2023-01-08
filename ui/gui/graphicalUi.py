@@ -1,4 +1,3 @@
-import customtkinter as ctk
 from tracking.user import User
 from seriesData.library import Library
 from seriesData.series import Series
@@ -6,7 +5,6 @@ from seriesData.season import Season
 from tracking.watchInfo import WatchInfo
 from anisearchEx.anisearch import AniSearch, SearchResult
 import eel
-import subprocess as sp
 import sys
 import gevent as gvt
 import webbrowser as wb
