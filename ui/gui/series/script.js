@@ -1,13 +1,39 @@
 wSeasonEle = document.getElementById("wSeason");
 wEpisodeEle = document.getElementById("wEpisode");
 watchInfoEle = document.getElementById("watchInfo");
+actionEle = document.getElementById("action");
+openWpEle = document.getElementById("openWatchPage");
 
 
 function back() {
     window.location.href = backLink;
 }
 
-async function loadSeries() {
+function action() {
+    eel.action()(function(newBtnText){
+        actionEle.innerHTML = newBtnText;
+        loadWatchInfo();
+    });
+}
+
+function showWatchInfo(watchInfo) {
+    if (!watchInfo.episode) {
+        watchInfoEle.style.display = "none";
+        return 
+    }
+    wSeasonEle.innerHTML = "Season " + watchInfo.season + "/" + watchInfo.maxSeason;
+    wEpisodeEle.innerHTML = "Episode " + watchInfo.episode + "/" + watchInfo.maxEpisode;
+    openWpEle.style.display = watchInfo.watchLocation ? "inherit" : "none";
+    watchInfoEle.style.display = "block";
+}
+
+function loadWatchInfo() {
+    eel.getWatchInfo()(function(watchInfo){
+        showWatchInfo(watchInfo);
+    });
+}
+
+async function init() {
     eel.getSelectedSeries()(function(seriesData){
         headerEle = document.getElementsByTagName("header").item(0);
         nameEle = document.getElementsByTagName("name").item(0);
@@ -20,13 +46,10 @@ async function loadSeries() {
         descEle.innerHTML = seriesData.desc ? seriesData.desc : "No description";        
     });
     eel.getBackLink()(function(bLink){backLink = bLink});
-    eel.getWatchInfo()(function(watchInfo){
-        if (!watchInfo.episode) {
-            return 
-        }
-        wSeasonEle.innerHTML = "Season " + watchInfo.season + "/" + watchInfo.maxSeason;
-        wEpisodeEle.innerHTML = "Episode " + watchInfo.episode + "/" + watchInfo.maxEpisode;
-        watchInfoEle.style.display = "block";
+    loadWatchInfo();
+    eel.getActionText()(function(newBtnText){
+        actionEle.innerHTML = newBtnText;
+        actionEle.style.display = "block";
     });
 }
 
@@ -45,6 +68,9 @@ function setSeason(event) {
     eel.setSeason(newSeason)(function(watchInfo){
         btn = event.target;
         wSeasonEle.innerHTML = "Season " + watchInfo.season + "/" + watchInfo.maxSeason;
+        if (wEpisodeEle.children.length == 0) {
+            wEpisodeEle.innerHTML = "Episode " + watchInfo.episode + "/" + watchInfo.maxEpisode;
+        }
         btn.setAttribute("onclick","showSetSeason(event)");
         btn.innerHTML = "Edit season";
     });    
@@ -57,7 +83,7 @@ function showSetEpisode(event) {
     inputEle.type = "text";
     wEpisodeEle.appendChild(inputEle);
     btn.setAttribute("onclick", "setEpisode(event)");
-    btn.innerHTML = "Set Episode";
+    btn.innerHTML = "Set episode";
 }
 
 function setEpisode(event) {
@@ -66,8 +92,42 @@ function setEpisode(event) {
         btn = event.target;
         wEpisodeEle.innerHTML = "Episode " + watchInfo.episode + "/" + watchInfo.maxEpisode;
         btn.setAttribute("onclick","showSetEpisode(event)");
-        btn.innerHTML = "Edit Episode";
+        btn.innerHTML = "Edit episode";
     });    
 }
 
-loadSeries();
+function showSetWatchLocation(event) {
+    btn = event.target;
+    openWpEle.innerHTML = "";
+    inputEle = document.createElement("input");
+    inputEle.type = "text";
+    openWpEle.appendChild(inputEle);
+    openWpEle.style.display = "inherit";
+    btn.setAttribute("onclick", "setWatchLocation(event)");
+    openWpEle.setAttribute("onclick", "");
+    btn.innerHTML = "Set watch location";
+}
+
+function setWatchLocation(event) {
+    newLink = openWpEle.children[0].value;
+    eel.setWatchLocation(newLink)(function(watchInfo){
+        btn = event.target;
+        btn.setAttribute("onclick","showSetWatchLocation(event)");
+        openWpEle.setAttribute("onclick", "openWatchPage()");
+        openWpEle.innerHTML = "Open watch page";
+        openWpEle.style.display = watchInfo.watchLocation ? "inherit" : "none";
+        btn.innerHTML = "Edit watch location";
+    });    
+}
+
+function nextEpisode() {
+    eel.nextEpisode()(function (watchInfo) {
+        showWatchInfo(watchInfo);
+    });
+}
+
+function openWatchPage() {
+    eel.openWatchPage();
+}
+
+init();

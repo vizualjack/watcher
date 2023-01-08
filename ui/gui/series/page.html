@@ -9,7 +9,7 @@
   <body>
     <options>
       <button id="back" onclick="back()">Back</button>
-      <button id="action">Add to watch list</button>
+      <button id="action" onclick="action()" style="display:none">action</button>
     </options>
     <series>
       <header>
@@ -24,9 +24,9 @@
       <button onclick="showSetSeason(event)">Edit season</button>
       <span id="wEpisode">Episode 1/2</span>
       <button onclick="showSetEpisode(event)">Edit episode</button>
-      <button>Next episode</button>
-      <button>Open watch page</button>
-      <button>Edit link</button>
+      <button onclick="nextEpisode()">Next episode</button>
+      <button id="openWatchPage" onclick="openWatchPage()">Open watch page</button>
+      <button onclick="showSetWatchLocation(event)">Set watch location</button>
     </watchInfo>
     <script src="script.js"></script>
   </body>
