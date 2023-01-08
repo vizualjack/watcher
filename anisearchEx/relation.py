@@ -1,4 +1,4 @@
-from .extractedSeason import ExtractedSeason
+from anisearchEx.extractedSeason import ExtractedSeason
 
 
 class Relation:

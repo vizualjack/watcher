@@ -5,15 +5,16 @@
     <title>Watcher - Search anime</title>
     <link rel="stylesheet" href="style.css" />
     <script type="text/javascript" src="/eel.js"></script>
+    <link rel="icon" type="image/x-icon" href="/icon.ico">
   </head>
   <body>
     <options>
       <button id="back" onclick="back()">Back</button>
+      <search>
+        <input type="text" id="searchText"/>
+        <button onclick="search()">Search</button>
+      </search>
     </options>
-    <search>
-      <input type="text" id="searchText"/>
-      <button onclick="search()">Search</button>
-    </search>
 
     <seriesHolder>
       <series style="display:none">

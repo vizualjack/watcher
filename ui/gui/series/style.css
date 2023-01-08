@@ -19,6 +19,7 @@ options #back {
 options #action {
   left: 96%;
   transform: translateX(-100%);
+  width: 125px;
 }
 
 series {
@@ -37,29 +38,30 @@ header name {
   display: block;
   position: relative;
   left: 310px;
-  top: 370px;
+  top: 340px;
   font-size: 30px;
+  width: 400px;
 }
 
 header seasons {
   display: block;
   position: relative;
   left: 310px;
-  top: 370px;
+  top: 340px;
 }
 
 desc {
   display: block;
-  padding: 5px;
+  padding: 10px;
+  margin-top: 18px;
 }
+
 
 watchInfo {
   position: absolute;
+  background-color: gray;
   top: 100px;
   right: 137px;
-  display: block;
-  width: 200px;
-  background-color: gray;
   border-radius: 5px;
   padding: 10px;
 }
@@ -68,3 +70,30 @@ watchInfo p {
   margin: 0 0 10px 0;
   text-align: center;
 }
+
+watchInfo button {
+  padding: 9px 0;
+  width: 100%;
+}
+
+watchInfo span {
+  padding: 8px 0;
+  font-size: 18px;
+}
+
+grid21 {
+  display: grid;
+  grid-template-columns: 200px 125px;
+  grid-template-rows: auto;
+  grid-template-areas: 
+    "header header"
+    "main setBtn";
+}
+
+grid21 * {
+  display: block;
+}
+
+grid21 .header {grid-area: header;}
+grid21 .main {grid-area: main;}
+grid21 .setBtn {grid-area: setBtn;}

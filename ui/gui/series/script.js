@@ -24,7 +24,7 @@ function showWatchInfo(watchInfo) {
     wSeasonEle.innerHTML = "Season " + watchInfo.season + "/" + watchInfo.maxSeason;
     wEpisodeEle.innerHTML = "Episode " + watchInfo.episode + "/" + watchInfo.maxEpisode;
     openWpEle.style.display = watchInfo.watchLocation ? "inherit" : "none";
-    watchInfoEle.style.display = "block";
+    watchInfoEle.style.display = "grid";
 }
 
 function loadWatchInfo() {
@@ -103,6 +103,8 @@ function showSetWatchLocation(event) {
     inputEle.type = "text";
     openWpEle.appendChild(inputEle);
     openWpEle.style.display = "inherit";
+    openWpEle.style.backgroundColor = "transparent";
+    openWpEle.style.borderColor = "transparent";
     btn.setAttribute("onclick", "setWatchLocation(event)");
     openWpEle.setAttribute("onclick", "");
     btn.innerHTML = "Set watch location";
@@ -116,6 +118,8 @@ function setWatchLocation(event) {
         openWpEle.setAttribute("onclick", "openWatchPage()");
         openWpEle.innerHTML = "Open watch page";
         openWpEle.style.display = watchInfo.watchLocation ? "inherit" : "none";
+        openWpEle.style.backgroundColor = "";
+        openWpEle.style.borderColor = "";
         btn.innerHTML = "Edit watch location";
     });    
 }

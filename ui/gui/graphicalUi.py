@@ -4,7 +4,7 @@ from seriesData.library import Library
 from seriesData.series import Series
 from seriesData.season import Season
 from tracking.watchInfo import WatchInfo
-from anisearch.anisearch import AniSearch, SearchResult
+from anisearchEx.anisearch import AniSearch, SearchResult
 import eel
 import subprocess as sp
 import sys
@@ -35,6 +35,7 @@ class GraphicalUI:
     def doAction(self):
         if self.loadBase == LB_SEARCH:
             self.library.addSeries(self.selectedSeries)
+            self.loadBase = LB_LIST
         elif self.loadBase == LB_LIST:
             watchInfo = self.user.getWatchInfoForSeries(self.selectedSeries)
             if watchInfo:
@@ -142,6 +143,7 @@ def loadSeries(index):
     newSeries = Series(searchEntry.name)
     newSeries.image = searchEntry.image
     newSeries.desc = addInfo.desc
+    newSeries.link = searchEntry.link
     for exSeason in addInfo.extractedSeasons:
         newSeries.addSeason(exSeason.episodes, exSeason.name)
     gui.selectedSeries = newSeries

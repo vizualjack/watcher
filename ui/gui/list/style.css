@@ -6,6 +6,7 @@ body {
 options {
   display: block;
   padding: 10px 0;
+  height: 10px;
 }
 
 options select {
@@ -18,15 +19,15 @@ options button {
   position: absolute;
   left: 96%;
   transform: translateX(-100%);
+  width: 85px;
 }
 
 seriesHolder {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
     Arial, sans-serif;
   margin: auto;
-  max-width: 38rem;
   padding: 2rem;
-  cursor: pointer;
+  display: block;
 }
 
 series {
@@ -37,6 +38,7 @@ series {
   background-color: gray;
   overflow: hidden;
   float: left;
+  cursor: pointer;
 }
 
 series name {

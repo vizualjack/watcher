@@ -1,9 +1,9 @@
 from bs4 import BeautifulSoup
-from .anisearchLoader import load
-from .searchEntry import SearchEntry
-from .loadResult import LoadResult
-from .extractedSeason import ExtractedSeason
-from .relation import Relation
+from anisearchEx.anisearchLoader import load
+from anisearchEx.searchEntry import SearchEntry
+from anisearchEx.loadResult import LoadResult
+from anisearchEx.extractedSeason import ExtractedSeason
+from anisearchEx.relation import Relation
 import json
 
 
@@ -13,22 +13,31 @@ Relations = list[Relation]
 
 BASE_LINK = "https://www.anisearch.com/anime/"
 class AniSearch:
-    def loadFromSearchEntry(self, searchEntry: SearchEntry) -> LoadResult:
-        loadResult = LoadResult(searchEntry.name, searchEntry.link, searchEntry.image)
+    def loadFromLink(self, link: str) -> LoadResult:
+        loadResult = LoadResult(link)
         pageLoader = self.__loadPage(loadResult.link)
         try:
+            imageLink = pageLoader.find("img", attrs={"id": "details-cover"}).get("src")
+            loadResult.loadImage(imageLink)
+            loadResult.name = pageLoader.find("h1", attrs={"id": "htitle"}).text
             loadResult.desc = ""
             descEle = pageLoader.find("div", attrs={"class": "textblock details-text", "lang": "en"})
             if descEle:
-                loadResult.desc = descEle.contents[0].text
+                loadResult.desc = ""
+                for content in descEle.contents:
+                    if not content.name:
+                        loadResult.desc += content
+                    elif content.name == "a":
+                        loadResult.desc += content.text
             infoblock = pageLoader.find("ul", attrs={"class": "xlist row simple infoblock"})
-            episodes = infoblock.find("div", attrs={"class": "type"}).text
-            episodes = episodes.split(" ")[2]
+            episodes = infoblock.find("div", attrs={"class": "type"}).text.split(", ")
+            episodes = episodes[len(episodes)-1].strip().split(" ")
+            episodes = episodes[0]
             loadResult.extractedSeasons.append(ExtractedSeason(episodes, loadResult.name))
             self.__loadSequelSeasons(loadResult)
         except Exception as ex:
             print("Exception on extracting infos from: " + loadResult.link)
-            print(ex.with_traceback())
+            print(ex)
         return loadResult
 
         
