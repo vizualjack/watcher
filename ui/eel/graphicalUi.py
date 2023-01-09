@@ -8,6 +8,7 @@ import eel
 import sys
 import gevent as gvt
 import webbrowser as wb
+import sys
 
 
 LB_LIST = "list"
@@ -23,7 +24,7 @@ class GraphicalUI:
         self.searchResult = SearchResult()
         self.selectedSeries: Series = None
         self.loadBase = ""
-        eel.init("./ui/gui")
+        eel.init("./ui/eel")
 
     
     def use(self):
