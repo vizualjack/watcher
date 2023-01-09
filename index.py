@@ -1,11 +1,11 @@
-# for compiling ui.eel.graphicalUi
-class FakeOut:
-    def write(p1,p2):
-        pass
-import sys
-sys.stdout = FakeOut()
-sys.stderr = FakeOut()
-######
+# # for compiling ui.eel.graphicalUi
+# class FakeOut:
+#     def write(p1,p2):
+#         pass
+# import sys
+# sys.stdout = FakeOut()
+# sys.stderr = FakeOut()
+# ######
 
 from persister import Persister
 # from ui.console.consoleUi import ConsoleUI # pyinstaller index.py --name Watcher --onefile --icon=icon.ico
