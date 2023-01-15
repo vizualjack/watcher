@@ -9,6 +9,7 @@ import sys
 import gevent as gvt
 import webbrowser as wb
 import sys
+import whichcraft as wch
 
 
 LB_LIST = "list"
@@ -28,7 +29,8 @@ class GraphicalUI:
 
     
     def use(self):
-        eel.start('list/page.html', close_callback=self._close_callback)#, mode="electron")
+        eel.start('list/page.html', close_callback=self._close_callback)
+        # eel.start('list/page.html', close_callback=self._close_callback, mode="custom", cmdline_args=[wch.which('electron'), "http://localhost:8000/list/page.html"])
 
 
     def doAction(self):

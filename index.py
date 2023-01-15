@@ -1,10 +1,10 @@
 # for compiling ui.eel.graphicalUi
-class FakeOut:
-    def write(p1,p2):
-        pass
-import sys
-sys.stdout = FakeOut()
-sys.stderr = FakeOut()
+# class FakeOut:
+#     def write(p1,p2):
+#         pass
+# import sys
+# sys.stdout = FakeOut()
+# sys.stderr = FakeOut()
 ######
 
 from persister import Persister
