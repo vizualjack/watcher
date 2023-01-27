@@ -21,4 +21,4 @@ HEADERS={
 
 
 def load(link) -> bytes:
-    return requests.get(link, headers=HEADERS, timeout=0.2).content
+    return requests.get(link, headers=HEADERS, timeout=0.25).content

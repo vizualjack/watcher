@@ -1,13 +1,10 @@
 from seriesData.season import Season
 
 
-SeasonList = list[Season]
-
-
 class Series:
     def __init__(self, name: str) -> None:
         self.name = name
-        self.seasons = SeasonList()
+        self.seasons = list()
         self.image = ""
         self.desc = ""
         self.link = ""
