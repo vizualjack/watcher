@@ -10,7 +10,7 @@
 from persister import Persister
 # from ui.console.consoleUi import ConsoleUI # pyinstaller index.py --name Watcher --onefile --icon=icon.ico
 from ui.eel.graphicalUi import GraphicalUI # pyinstaller index.py --name Watcher --icon=icon.ico --add-data "ui/eel/;ui/eel/" --onefile --noconsole
-
+                                           # on linux   ~/.local/bin/pyinstaller index.py --name Watcher --icon=icon.ico --add-data ui/eel/:ui/eel/ --onefile --noconsole
 
 
 if __name__ == "__main__":

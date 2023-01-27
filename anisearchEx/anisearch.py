@@ -7,9 +7,6 @@ from anisearchEx.relation import Relation
 import json
 
 
-SearchResult = list[SearchEntry]
-Relations = list[Relation]
-
 
 BASE_LINK = "https://www.anisearch.com/anime/"
 class AniSearch:
@@ -46,8 +43,8 @@ class AniSearch:
         return loadResult
 
         
-    def search(self, searchText) -> SearchResult:
-        searchResult = SearchResult()
+    def search(self, searchText) -> list:
+        searchResult = list()
         pageLoader = self.__loadPage(f"{BASE_LINK}index?text={searchText}")
         for entry in self.__entriesAsList(pageLoader):
             linkElement = entry.find("a")
@@ -107,7 +104,7 @@ class AniSearch:
     def __getSequelRelations(self, dataGraph):
         sequelRelationId = self.__getSequelRelationId(dataGraph)
         animeDict = dataGraph["nodes"]["anime"]
-        relations = Relations()
+        relations = list()
         for edge in dataGraph["edges"]:
             if edge["relation"] != sequelRelationId:
                 continue

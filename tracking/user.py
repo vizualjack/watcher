@@ -1,12 +1,9 @@
 from tracking.watchInfo import WatchInfo
 
 
-WatchInfos = list[WatchInfo]
-
-
 class User:
     def __init__(self) -> None:
-        self.watchInfos = WatchInfos()
+        self.watchInfos = list()
 
 
     def getWatchInfoForSeries(self, series):

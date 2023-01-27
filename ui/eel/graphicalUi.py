@@ -3,13 +3,13 @@ from seriesData.library import Library
 from seriesData.series import Series
 from seriesData.season import Season
 from tracking.watchInfo import WatchInfo
-from anisearchEx.anisearch import AniSearch, SearchResult
+from anisearchEx.anisearch import AniSearch
 import eel
 import sys
 import gevent as gvt
 import webbrowser as wb
 import sys
-import whichcraft as wch
+# import whichcraft as wch
 
 
 LB_LIST = "list"
@@ -22,7 +22,7 @@ class GraphicalUI:
         self.user = user
         self.library = library
         self.seriesList = list()
-        self.searchResult = SearchResult()
+        self.searchResult = list()
         self.selectedSeries: Series = None
         self.loadBase = ""
         eel.init("./ui/eel")

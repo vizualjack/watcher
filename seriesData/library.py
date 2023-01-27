@@ -1,12 +1,13 @@
 from seriesData.series import Series
 
 
-SeriesList = list[Series]
+# SeriesList = list[Series]
 
 
 class Library:
     def __init__(self, series:list=None) -> None:
-        self.series = SeriesList()
+        # self.series = SeriesList()
+        self.series = list()
         if series != None:
             self.series = series
 
