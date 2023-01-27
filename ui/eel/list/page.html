@@ -9,7 +9,9 @@
   </head>
   <body>
     <options>
-      <select id="list" onchange="loadSeries()">
+      <input type="checkbox" id="checkbox" onchange="onCheckBoxClicked()">
+      <label for="checkbox" id="checkboxLabel">Hide finished</label>
+      <select id="list" onchange="onListChange()">
         <option value="watchList">watch list</option>
         <option value="library">library</option>
       </select>

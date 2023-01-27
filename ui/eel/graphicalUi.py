@@ -91,6 +91,13 @@ def convertSeriesToDict(series: Series):
     for season in series.seasons:
         seasonsList.append(convertSeasonToDict(season))
     seriesDict["seasons"] = seasonsList
+    watchStatus = 0
+    watchInfo = gui.user.getWatchInfoForSeries(series)
+    if watchInfo:
+        watchStatus = 1
+        if not watchInfo.unseenEpisodes():
+            watchStatus = 2
+    seriesDict["watchStatus"] = watchStatus
     return seriesDict
 
 

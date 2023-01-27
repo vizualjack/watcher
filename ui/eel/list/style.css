@@ -1,6 +1,12 @@
 body {
   background-color: black;
   margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
+    Arial, sans-serif;
+}
+
+#checkboxLabel {
+  color: white;
 }
 
 options {
@@ -23,8 +29,6 @@ options button {
 }
 
 seriesHolder {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
-    Arial, sans-serif;
   margin: auto;
   padding: 2rem;
   display: block;

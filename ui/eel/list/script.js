@@ -1,3 +1,5 @@
+WS_ATT_NAME = "data:watchstatus";
+
 async function loadSeries() {
     while(seriesHolder.children.length > 1) {
         seriesHolder.children[1].remove();
@@ -6,6 +8,7 @@ async function loadSeries() {
         seriesData.forEach((val, index) => {
             seriesEle = seriesTemplate.cloneNode(true);
             seriesEle.id = index;
+            seriesEle.setAttribute(WS_ATT_NAME, val.watchStatus);
             seriesEle.children[0].innerHTML = val.name;
             seriesEle.addEventListener('click', async () => {
                 eel.selectSeries(index)(function(){
@@ -23,7 +26,31 @@ function newAnime() {
     window.location.href = '/search/page.html';
 }
 
+function changeCheckBox() {
+    checkBoxLabel.innerHTML = listSelector.value == "watchList" ? "Hide finished" : "Hide already in watch list";
+    checkBox.checked = false;
+}
+
+function onListChange() {
+    loadSeries();
+    changeCheckBox();
+}
+
+function onCheckBoxClicked() {
+    listSelector.value == "watchList" ? "Hide finished" : "Hide already in watch list";
+    displayValue = checkBox.checked ? "none" : "block";
+    for(let i = 1; i < seriesHolder.children.length; i++) {
+        seriesEle = seriesHolder.children[i];
+        if (seriesEle.getAttribute(WS_ATT_NAME) != 0) {
+            seriesEle.style.display = displayValue;
+        }
+    }
+}
+
 seriesTemplate = document.getElementsByTagName("series").item(0);
 seriesHolder = document.getElementsByTagName("seriesHolder").item(0);
 listSelector = document.getElementById("list");
+checkBox = document.getElementById("checkbox");
+checkBoxLabel = document.getElementById("checkboxLabel");
+
 loadSeries();
