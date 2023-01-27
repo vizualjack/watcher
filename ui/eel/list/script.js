@@ -37,11 +37,15 @@ function onListChange() {
 }
 
 function onCheckBoxClicked() {
-    listSelector.value == "watchList" ? "Hide finished" : "Hide already in watch list";
     displayValue = checkBox.checked ? "none" : "block";
     for(let i = 1; i < seriesHolder.children.length; i++) {
         seriesEle = seriesHolder.children[i];
-        if (seriesEle.getAttribute(WS_ATT_NAME) != 0) {
+        if (listSelector.value == "library" && 
+            seriesEle.getAttribute(WS_ATT_NAME) != 0) {
+            seriesEle.style.display = displayValue;
+        }
+        else if (listSelector.value == "watchList" && 
+        seriesEle.getAttribute(WS_ATT_NAME) == 2) {
             seriesEle.style.display = displayValue;
         }
     }
