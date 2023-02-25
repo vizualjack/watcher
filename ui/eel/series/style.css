@@ -29,16 +29,18 @@ series {
 }
 
 header {
-  width: 300px;
-  height: 425px;
+  width: 250px;
+  height: 375px;
   border-radius: 5px;
+  background-size: cover;
+  background-position-x: center;
 }
 
 header name {
   display: block;
   position: relative;
-  left: 310px;
-  top: 340px;
+  left: 265px;
+  top: 317px;
   font-size: 30px;
   width: 400px;
 }
@@ -46,8 +48,8 @@ header name {
 header seasons {
   display: block;
   position: relative;
-  left: 310px;
-  top: 340px;
+  left: 265px;
+  top: 320px;
 }
 
 desc {
