@@ -109,7 +109,7 @@ function showSetWatchLocation(event) {
     openWpEle.style.borderColor = "transparent";
     btn.setAttribute("onclick", "setWatchLocation(event)");
     openWpEle.setAttribute("onclick", "");
-    btn.innerHTML = "Set watch location";
+    btn.innerHTML = "Set watch page";
 }
 
 function setWatchLocation(event) {
@@ -122,7 +122,7 @@ function setWatchLocation(event) {
         openWpEle.style.display = watchInfo.watchLocation ? "inherit" : "none";
         openWpEle.style.backgroundColor = "";
         openWpEle.style.borderColor = "";
-        btn.innerHTML = "Edit watch location";
+        btn.innerHTML = "Edit watch page";
     });    
 }
 
