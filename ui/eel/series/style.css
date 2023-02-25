@@ -97,3 +97,7 @@ grid21 * {
 grid21 .header {grid-area: header;}
 grid21 .main {grid-area: main;}
 grid21 .setBtn {grid-area: setBtn;}
+
+.seasonName {
+  font-size: 14px;
+}

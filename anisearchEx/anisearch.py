@@ -32,11 +32,11 @@ class AniSearch:
                             continue
                         loadResult.desc += content.text
             infoblock = pageLoader.find("ul", attrs={"class": "xlist row simple infoblock"})
-            episodes = infoblock.find("div", attrs={"class": "type"}).text.split(", ")
-            episodes = episodes[len(episodes)-1].strip().split(" ")
-            episodes = episodes[0]
-            loadResult.extractedSeasons.append(ExtractedSeason(episodes, loadResult.name))
-            self.__loadSequelSeasons(loadResult)
+            # episodes = infoblock.find("div", attrs={"class": "type"}).text.split(", ")
+            # episodes = episodes[len(episodes)-1].strip().split(" ")
+            # episodes = episodes[0]
+            # loadResult.extractedSeasons.append(ExtractedSeason(episodes, loadResult.name))
+            self.__loadSeasons(loadResult)
         except Exception as ex:
             print("Exception on extracting infos from: " + loadResult.link)
             print(ex)
@@ -62,6 +62,8 @@ class AniSearch:
     
     def __entriesAsList(self, pageLoader: BeautifulSoup):
         list = pageLoader.find("ul", attrs={"class", "covers gallery"})
+        if not list:
+            return []
         return list.find_all("li")
 
 
@@ -76,10 +78,22 @@ class AniSearch:
         return linkElement.get("href").replace("anime/", "https://www.anisearch.com/anime/")
 
 
-    def __loadSequelSeasons(self, loadResult:LoadResult):
+    def __loadSeasons(self, loadResult:LoadResult):
         dataGraph = self.__getDataGraph(f"{loadResult.link}/relations")
         relations = self.__getSequelRelations(dataGraph)
         extractedSeasons = loadResult.extractedSeasons
+        for startRelation in relations:
+            isStart = True
+            startSeason = startRelation.frm
+            for relation in relations:
+                if startRelation == relation:
+                    continue
+                if startSeason.name == relation.to.name:
+                    isStart = False
+                    break
+            if isStart:
+                extractedSeasons.append(startSeason)
+                break
         while True: 
             lastSeason = extractedSeasons[len(extractedSeasons)-1]
             nextSeason = None

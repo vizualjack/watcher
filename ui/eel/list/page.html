@@ -7,7 +7,7 @@
     <script type="text/javascript" src="/eel.js"></script>
     <link rel="icon" type="image/x-icon" href="/icon.ico">
   </head>
-  <body>
+  <body onresize="adjustSeriesHolderWidth()">
     <options>
       <input type="checkbox" id="checkbox" onchange="onCheckBoxClicked()">
       <label for="checkbox" id="checkboxLabel">Hide finished</label>
@@ -18,7 +18,7 @@
       <button onclick="newAnime()">New anime</button>
     </options>
     <seriesHolder>
-      <series style="display:none">
+      <series style="display:inline-block">
         <name>name</name>
       </series>
     </seriesHolder>

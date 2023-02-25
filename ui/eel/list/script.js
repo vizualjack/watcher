@@ -15,10 +15,11 @@ async function loadSeries() {
                     window.location.href = '/series/page.html';
                 });                
             });
-            seriesEle.style.display = "block";
+            seriesEle.style.display = "inline-block";
             seriesEle.style.backgroundImage = "url(" + val.image + ")";
             seriesHolder.appendChild(seriesEle);
         });
+        adjustSeriesHolderWidth();
     });
 }
 
@@ -51,10 +52,23 @@ function onCheckBoxClicked() {
     }
 }
 
+function adjustSeriesHolderWidth() {
+    totalWidth = document.body.clientWidth - seriesHolderPad;
+    newSeriesHolderWidth = totalWidth / seriesWidth;
+    newSeriesHolderWidth = Math.floor(newSeriesHolderWidth);
+    newSeriesHolderWidth = Math.min(seriesHolder.childElementCount-1, newSeriesHolderWidth);
+    newSeriesHolderWidth *= seriesWidth;    
+    seriesHolder.style.width = newSeriesHolderWidth + "px";
+}
+
 seriesTemplate = document.getElementsByTagName("series").item(0);
 seriesHolder = document.getElementsByTagName("seriesHolder").item(0);
 listSelector = document.getElementById("list");
 checkBox = document.getElementById("checkbox");
 checkBoxLabel = document.getElementById("checkboxLabel");
+totalMargin = parseInt(window.getComputedStyle(seriesTemplate).margin.replace("px","") * 2);
+seriesWidth = seriesTemplate.clientWidth + totalMargin;
+seriesHolderPad = parseInt(window.getComputedStyle(seriesHolder).padding.replace("px","") * 2);
+seriesTemplate.style.display = "none";
 
 loadSeries();

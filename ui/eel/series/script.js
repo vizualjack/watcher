@@ -1,3 +1,4 @@
+wSeasonNameEle = document.getElementById("wSeasonName");
 wSeasonEle = document.getElementById("wSeason");
 wEpisodeEle = document.getElementById("wEpisode");
 watchInfoEle = document.getElementById("watchInfo");
@@ -21,6 +22,7 @@ function showWatchInfo(watchInfo) {
         watchInfoEle.style.display = "none";
         return 
     }
+    wSeasonNameEle.innerHTML = "Season name: <br>" + watchInfo.seasonName;
     wSeasonEle.innerHTML = "Season " + watchInfo.season + "/" + watchInfo.maxSeason;
     wEpisodeEle.innerHTML = "Episode " + watchInfo.episode + "/" + watchInfo.maxEpisode;
     openWpEle.style.display = watchInfo.watchLocation ? "inherit" : "none";

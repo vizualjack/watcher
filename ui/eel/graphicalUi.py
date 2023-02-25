@@ -104,6 +104,7 @@ def convertSeriesToDict(series: Series):
 def convertWatchInfoToDict(watchInfo: WatchInfo):
     watchInfoDict = dict()
     if watchInfo:
+        watchInfoDict["seasonName"] = watchInfo.getSeasonName()
         watchInfoDict["season"] = watchInfo.getSeason()
         watchInfoDict["maxSeason"] = watchInfo.getSeriesSeasons()
         watchInfoDict["episode"] = watchInfo.getEpisode()

@@ -7,20 +7,20 @@
     <script type="text/javascript" src="/eel.js"></script>
     <link rel="icon" type="image/x-icon" href="/icon.ico">
   </head>
-  <body>
+  <body onresize="adjustSeriesHolderWidth()">
     <options>
       <button id="back" onclick="back()">Back</button>
       <search>
-        <input type="text" id="searchText"/>
+        <input type="text" id="searchText" onkeyup="checkForSearchTrigger(event)"/>
         <button onclick="search()">Search</button>
       </search>
     </options>
-
     <seriesHolder>
-      <series style="display:none">
+      <series style="display:inline-block">
         <name>name</name>
       </series>
     </seriesHolder>
+    <div id="loadAnim"><div></div></div>
     <script src="script.js"></script>
   </body>
 </html>

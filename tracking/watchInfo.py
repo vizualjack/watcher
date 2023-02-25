@@ -1,4 +1,5 @@
 from seriesData.series import Series
+from seriesData.season import Season
 
 class WatchInfo:
     def __init__(self, series:Series) -> None:
@@ -27,10 +28,11 @@ class WatchInfo:
 
 
     def getSeasonEpisodes(self) -> int:
-        self.__checkForNewSeason()
-        curSeasonIndex = self.season-1
-        season = self.series.seasons[curSeasonIndex]
-        return season.episodes
+        return self.__getCurrentSeason().episodes
+    
+    
+    def getSeasonName(self) -> str:
+        return self.__getCurrentSeason().name
 
     
     def getWatchLocation(self) -> str:
@@ -45,7 +47,7 @@ class WatchInfo:
             return self.watchLocation.startswith("https://") or self.watchLocation.startswith("http://")
         except:
             return False
-
+        
 
     def nextEpisode(self):
         curSeasonIndex = self.season-1
@@ -83,3 +85,9 @@ class WatchInfo:
         if lastSeasonIndex > curSeasonIndex:
             self.season += 1
             self.episode = 1
+
+
+    def __getCurrentSeason(self) -> Season: 
+        self.__checkForNewSeason()
+        curSeasonIndex = self.season-1
+        return self.series.seasons[curSeasonIndex]
