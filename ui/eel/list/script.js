@@ -38,7 +38,7 @@ function onListChange() {
 }
 
 function onCheckBoxClicked() {
-    displayValue = checkBox.checked ? "none" : "block";
+    displayValue = checkBox.checked ? "none" : "inline-block";
     for(let i = 1; i < seriesHolder.children.length; i++) {
         seriesEle = seriesHolder.children[i];
         if (listSelector.value == "library" && 
