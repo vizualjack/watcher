@@ -1,0 +1,94 @@
+body {
+  background-color: black;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
+    Arial, sans-serif;
+  box-sizing: border-box;
+}
+
+options {
+  display: block;
+  padding: 10px 0;
+  height: 10px;
+}
+
+options #back {  
+  position: absolute;  
+  left: 4%;
+}
+
+options search {
+  position: absolute;  
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+seriesHolder {
+  margin: auto;
+  padding: 2rem;
+  display: block;
+}
+
+series {
+  margin: 0.5rem;
+  border-radius: 5px;
+  width: 250px;
+  height: 375px;
+  background-color: gray;
+  overflow: hidden;
+  cursor: pointer;
+  background-size: cover;
+  background-position-x: center;
+  transition: transform 1s;
+  transition-timing-function: ease;
+}
+
+series:hover {    
+  transform: scale3d(1.1, 1.1, 0.5);
+  box-shadow: 0px 0px 7px 4px lightskyblue;
+  z-index: 1;
+  position: relative;
+}
+
+series name {
+  position: relative;
+  text-align: center;
+  font-size: large;
+  background-color: rgba(100,100,100,0.9);
+  display: block;
+  padding: 10px;
+  top: 376px;
+  font-weight: bolder;
+  transition: top 1s;
+  transition-timing-function: ease;
+}
+
+series:hover name {
+  top: 285px;
+}
+
+#loadAnim {
+  position: absolute;
+  display: none;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+}
+
+#loadAnim div {  
+  border: 5px solid gray;
+  border-top: 5px solid lightskyblue;
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+  animation-name: loadingAnim;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+
+@keyframes loadingAnim {
+  from {transform: rotate(0deg)}
+  to {transform: rotate(360deg)}
+}

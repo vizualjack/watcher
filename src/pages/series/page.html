@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Watcher - Series view</title>
+    <link rel="stylesheet" href="style.css" />
+    <!-- <script type="text/javascript" src="/eel.js"></script> -->
+    <link rel="icon" type="image/x-icon" href="/icon.ico">
+  </head>
+  <body>
+    <options>
+      <button id="back" onclick="back()">Back</button>
+      <button id="action" onclick="action()" style="display:none">action</button>
+    </options>
+    <series>
+      <header>
+        <name></name>
+        <seasons></seasons>
+      </header>
+      <desc></desc>
+    </series>
+    <watchInfo id="watchInfo" style="display:none">
+      <grid21>
+        <p class="header">Watch info</p>
+      </grid21>
+      <grid21>
+        <span id="wSeasonName" class="header seasonName">Season name: </span>
+      </grid21>
+      <grid21>
+        <span id="wSeason" class="main">Season 1/2</span>
+        <cbutton onclick="showSetSeason(event)" class="setBtn">Edit season</cbutton>
+      </grid21>
+      <grid21>
+        <span id="wEpisode" class="main">Episode 1/2</span>
+        <cbutton onclick="showSetEpisode(event)" class="setBtn">Edit episode</cbutton>
+      </grid21>
+      <grid21>
+        <cbutton onclick="nextEpisode()" class="header" style="width:160px; margin: 8px auto">Next episode</cbutton>
+        <cbutton id="openWatchPage" onclick="openWatchPage()" class="main" style="width:130px">Open watch page</cbutton>
+        <cbutton onclick="showSetWatchLocation(event)" class="setBtn">Edit watch page</cbutton>
+      </grid21>
+    </watchInfo>
+    <script src="script.js"></script>
+  </body>
+</html>

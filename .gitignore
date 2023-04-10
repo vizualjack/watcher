@@ -1,6 +1,4 @@
-*.pyc
-data
-build*
-dist*
-*.out
-*.spec
+node_modules
+out
+dist
+.vscode

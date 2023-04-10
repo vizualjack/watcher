@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Watcher - Search anime</title>
+    <link rel="stylesheet" href="style.css" />
+    <!-- <script type="text/javascript" src="/eel.js"></script> -->
+    <link rel="icon" type="image/x-icon" href="/icon.ico">
+  </head>
+  <body onresize="adjustSeriesHolderWidth()">
+    <options>
+      <button id="back" onclick="back()">Back</button>
+      <search>
+        <input type="text" id="searchText" onkeyup="checkForSearchTrigger(event)"/>
+        <button onclick="search()">Search</button>
+      </search>
+    </options>
+    <seriesHolder>
+      <series style="display:inline-block">
+        <name>name</name>
+      </series>
+    </seriesHolder>
+    <div id="loadAnim"><div></div></div>
+    <script src="script.js"></script>
+  </body>
+</html>
