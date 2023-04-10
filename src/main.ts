@@ -90,7 +90,7 @@ function createWindow() {
   // and load the index.html of the app.
   mainWindow.loadFile('src/pages/list/page.html');
   // Open the DevTools.
-  mainWindow.webContents.openDevTools()
+  // mainWindow.webContents.openDevTools()
 }
 
 const menu = new Menu();
