@@ -22,7 +22,7 @@
     "@electron-forge/maker-zip": "^6.1.1",
     "@types/base-64": "^1.0.0",
     "@types/request": "^2.48.8",
-    "electron": "23.2.0",
+    "electron": "^23.2.0",
     "typescript": "^5.0.4"
   },
   "config": {

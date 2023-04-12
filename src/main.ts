@@ -78,13 +78,10 @@ function createWindow() {
     },
     icon: path.join(__dirname, '../icon.ico')
   })
-  
-  mainWindow.on('resized', () => {
-    saveWindowSettings(mainWindow);
-  })
 
-  mainWindow.on('moved', () => {
-    saveWindowSettings(mainWindow);
+  mainWindow.on('close', () => {
+      saveWindowSettings(mainWindow);
+      persister.save();
   })
 
   // and load the index.html of the app.
@@ -130,8 +127,8 @@ app.whenReady().then(() => {
 // explicitly with Cmd + Q.
 app.on('window-all-closed', function () {
   if (process.platform !== 'darwin') app.quit()
-  persister.save();
 })
+
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
