@@ -28,7 +28,8 @@
   "config": {
     "forge": {
       "packagerConfig": {
-        "icon": "icon.ico"
+        "icon": "icon.ico",
+        "executableName": "watcher"
       },
       "makers": [
         {
@@ -46,11 +47,17 @@
         },
         {
           "name": "@electron-forge/maker-deb",
-          "config": {}
+          "config": {
+            "icon": "icon.ico",
+            "setupIcon": "icon.ico"
+          }
         },
         {
           "name": "@electron-forge/maker-rpm",
-          "config": {}
+          "config": {
+            "icon": "icon.ico",
+            "setupIcon": "icon.ico"
+          }
         }
       ]
     }
