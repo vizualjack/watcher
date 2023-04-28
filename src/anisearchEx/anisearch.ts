@@ -85,14 +85,23 @@ export class AniSearch {
 
     async #loadSeasons(loadResult:LoadResult) {
         let dataGraph = await this.#getDataGraph(`${loadResult.link}/relations`);
+        console.log("Datagraph: ");
+        console.log(dataGraph);
         let relations = this.#getSequelRelations(dataGraph);
-        // console.log(relations);
+        console.log("Relations: ");
+        console.log(relations);
         let extractedSeasons = loadResult.extractedSeasons;
+        if(relations.length == 1) {
+            extractedSeasons.push(relations[0].frm);
+            return;
+        }
         // FIND AND PUSH START SEASON
         for(let i = 0; i < relations.length; i++) {
             let startRelation = relations[i];
             let isStart = true;
             let startSeason = startRelation.frm;
+            // console.log(startSeason.name);
+            // console.log(startSeason.episodes);
             for(let i = 0; i < relations.length; i++) {
                 let relation = relations[i];
                 if(startRelation == relation) continue;
@@ -130,8 +139,15 @@ export class AniSearch {
     #getSequelRelations(dataGraph:any) {
         let sequelRelationId = this.#getSequelRelationId(dataGraph);
         let animeDict = dataGraph["nodes"]["anime"];
+        console.log("animeDict: ");
+        console.log(animeDict);
         let relations = [];
         let edges = dataGraph["edges"];
+        console.log("edges: ");
+        console.log(edges);
+        if (edges.length == 0) {
+            relations.push(new Relation(this.#extractSeason(animeDict[dataGraph["id"]]["title"])));
+        }
         for(let i = 0; i < edges.length; i++) {
             let edge = edges[i];
             if(edge["relation"] != sequelRelationId) continue;
