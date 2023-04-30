@@ -279,11 +279,12 @@ ipcMain.handle("nextEpisode", () => {
   return getFullWatchInfo();
 });
 
-ipcMain.handle("openWatchPage", () => {
+ipcMain.handle("openWatchPage", async () => {
   let watchInfo = user.getWatchInfoForSeries(selectedSeries);
   if (watchInfo == null) return;
   let link = watchInfo.watchLocation;
-  exec(`start ${link}`);   // FOR WINDOWS
+  if(process.platform == "linux") exec(`firefox ${link}`);  // if firefox is used (standard browser on ubuntu)
+  else exec(`start ${link}`);   // as far as i tested only worked for windows
 });
 
 ipcMain.handle("getBackLink", () => {
