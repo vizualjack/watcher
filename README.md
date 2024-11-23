@@ -27,5 +27,7 @@ This project is a NodeJS project so the normal routine should take place here.
 
 #### Normal routine 
 `npm run start` - starts the app for testing
+
 `npm run package` - creates all files u need to use the app
+
 `npm run make` - creates a setup executable for simpler sharing the app with others
