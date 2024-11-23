@@ -17,13 +17,11 @@ export class SearchEntry {
     }
 
     #convertToImageLink(link:string) {
-        let bigImageLink = link.replace("full/", "");
-        bigImageLink = bigImageLink.replace(".webp", "_300.webp");
-        return `${BASE_LINK}${bigImageLink}`;
+        return `${BASE_LINK}${link}`;
     }
 
     async loadImage() {
-        let base64Image = await loadImageAsBase64(this.#convertToImageLink(this.imageLink));
+        let base64Image = (await loadImageAsBase64(this.#convertToImageLink(this.imageLink))).message;
         this.image = `data:image/webp;base64,${base64Image}`;
     }
 }

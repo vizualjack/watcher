@@ -9,9 +9,9 @@
   "scripts": {
     "build": "tsc",
     "start": "npm run build && electron-forge start",
-    "package": "electron-forge package",
-    "make": "electron-forge make",
-    "publish": "electron-forge publish",
+    "package": "npm run build && electron-forge package",
+    "make": "npm run build && electron-forge make",
+    "publish": "npm run build && electron-forge publish",
     "lint": "echo \"No linting configured\""
   },
   "devDependencies": {

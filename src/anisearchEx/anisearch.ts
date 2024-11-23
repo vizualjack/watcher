@@ -5,10 +5,26 @@ import {parse, NodeType} from 'node-html-parser';
 import { Relation } from "./relation";
 import { ExtractedSeason } from "./extractedSeason";
 import { SearchEntry } from "./searchEntry";
+import fs from 'fs';
 
-
+const START_PAGE = "https://www.anisearch.com";
 const BASE_LINK = "https://www.anisearch.com/anime/";
+const SESSION_KEY = "session_database";
+const SET_COOKIE_KEY = "set-cookie";
 export class AniSearch {
+    sessionKey: string;
+
+    async init() {
+        let response = await loadHtml(START_PAGE);
+        if(SET_COOKIE_KEY in response.headers) {
+            for(let cookie of response.headers[SET_COOKIE_KEY]) {
+                if(cookie.search(SESSION_KEY) != -1) {
+                    this.sessionKey = cookie.split(";")[0].replace(`${SESSION_KEY}=`, "");
+                }
+            }
+        }
+    }
+
     async loadFromLink(link:string) {
         let loadResult = new LoadResult(link);
         let page = await this.#getPage(loadResult.link);
@@ -47,11 +63,11 @@ export class AniSearch {
 
     async search(searchText:string) {
         let searchResult = [];
-        let page = await this.#getPage(`${BASE_LINK}index?text=${searchText}`);
+        let page = await this.#getPage(`${BASE_LINK}index/?char=all&text=${searchText}&q=true&kev=67955d35`);
         let results_li = this.#entriesAsList(page);
         for(let i = 0; i < results_li.length; i++) {
-            let result_li = results_li[i];
-            let linkElement = result_li.querySelector("a");
+            let entry = results_li[i];
+            let linkElement = entry.querySelector("a");
             let name = this.#getNameFromLinkElement(linkElement);
             let imageLink = this.#getImageLinkFromLinkElement(linkElement);
             let link = this.#getLinkFromLinkElement(linkElement);
@@ -63,7 +79,7 @@ export class AniSearch {
     }
 
     #getNameFromLinkElement(linkElement:HTMLElement) {
-        return linkElement.getAttribute("title")?.replace("Anime: ", "");
+        return linkElement.getAttribute("data-title")?.replace("Anime: ", "");
     }
 
     #getImageLinkFromLinkElement(linkElement:HTMLElement) {
@@ -75,12 +91,15 @@ export class AniSearch {
     }
 
     #entriesAsList(page:HTMLElement) {        
-        return page.querySelectorAll("ul[class='covers gallery'] > li");
+        return page.querySelectorAll("ul[class*='covers'] > li");
     }
 
     async #getPage(link) {
-        let htmlPage = await loadHtml(link);
-        return parse(htmlPage);
+        let cookies = {};
+        cookies[SESSION_KEY] = this.sessionKey;
+        cookies["kev"] = "67955d35";
+        let response = await loadHtml(link, cookies);
+        return parse(response.message);
     }
 
     async #loadSeasons(loadResult:LoadResult) {

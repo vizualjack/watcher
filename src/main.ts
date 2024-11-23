@@ -112,22 +112,22 @@ Menu.setApplicationMenu(menu);
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.whenReady().then(() => {
-  createWindow()
-
+app.whenReady().then(async () => {
+  createWindow();
+  await anisearch.init();
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
     if (BrowserWindow.getAllWindows().length === 0) createWindow()
-  })
-})
+  });
+});
 
 // Quit when all windows are closed, except on macOS. There, it's common
 // for applications and their menu bar to stay active until the user quits
 // explicitly with Cmd + Q.
 app.on('window-all-closed', function () {
   if (process.platform !== 'darwin') app.quit()
-})
+});
 
 
 // In this file you can include the rest of your app's specific main process
@@ -141,6 +141,7 @@ var loadBase = "";
 var selectedSeries: Series;
 var seriesList:Series[] = [];
 var searchResult:SearchEntry[] = [];
+var anisearch: AniSearch = new AniSearch();
 
 function getActionText() {
   if (loadBase == LB_SEARCH) return "Add to library";
@@ -292,14 +293,14 @@ ipcMain.handle("getBackLink", () => {
 });
 
 ipcMain.handle("searchSeries", async (event, searchText) => {
-  searchResult = await new AniSearch().search(searchText);
+  searchResult = await anisearch.search(searchText);
   console.log("Num of results: " + searchResult.length);
   return getSearchResult();
 });
 
 ipcMain.handle("loadSeries", async (event, index) => {
   let searchEntry = searchResult[index];
-  let addInfo = await new AniSearch().loadFromLink(searchEntry.link);
+  let addInfo = await anisearch.loadFromLink(searchEntry.link);
   let newSeries = new Series(-1,searchEntry.name);
   newSeries.image = searchEntry.image;
   newSeries.desc = addInfo.desc;

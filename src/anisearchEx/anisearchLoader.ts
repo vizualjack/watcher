@@ -1,33 +1,43 @@
 import {Readable} from 'stream';
+import {IncomingMessage} from 'http';
 
 const get = require("simple-get");
 
 
-async function readableToString(readableStream:Readable) {
+async function readMessage(incomingMessage:IncomingMessage) {
     let result = '';
-    for await(const chunk of readableStream) {
+    for await(const chunk of incomingMessage) {
         result += chunk;
     }
-    return result;
+    return {headers: incomingMessage.headers, message: result};
 }
 
-function load(link:string) {
-    return new Promise<Readable>((resolve, reject) => {
-        get(link, function(err:any,res:Readable) {
+function load(link:string, cookies:any|undefined) {
+    let headers:any = {};
+    if(cookies) {
+        let cookieText = "";
+        for (let key in cookies) {
+            cookieText += `${key}=${cookies[key]}; `;
+        }
+        console.log(cookieText);
+        headers["Cookie"] = cookieText;
+    }
+    return new Promise<IncomingMessage>((resolve, reject) => {
+        get({url: link, headers: headers}, function(err:any,res:IncomingMessage) {
             if (err) reject(err);
-            resolve(res)
+            resolve(res);
         })
     })
 }
 
 
-export async function loadImageAsBase64(link:string) {
-    let stream = await load(link);
+export async function loadImageAsBase64(link:string, cookies:object|undefined=undefined) {
+    let stream = await load(link, cookies);
     stream.setEncoding("base64");
-    return await readableToString(stream);
+    return await readMessage(stream);
 }
 
-export async function loadHtml(link:string) {
-    let stream = await load(link);
-    return await readableToString(stream);
+export async function loadHtml(link:string, cookies:object|undefined=undefined) {
+    let stream = await load(link, cookies);
+    return await readMessage(stream);
 }
