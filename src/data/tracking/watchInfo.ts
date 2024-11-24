@@ -1,4 +1,5 @@
 import { Series } from "../series";
+import { logger } from '../../logger';
 
 export class WatchInfo {
     series:Series;
@@ -56,7 +57,7 @@ export class WatchInfo {
         let curSeasonIndex = this.season - 1;
         let lastSeasonIndex = this.series.seasons.length - 1;
         if (curSeasonIndex > lastSeasonIndex) {
-            console.log("Current season index is higher than last season index");
+            logger.info("Current season index is higher than last season index");
             return false;
         }
         if (curSeasonIndex < lastSeasonIndex) return true;

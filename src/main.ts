@@ -9,19 +9,14 @@ import { User } from './data/tracking/user';
 import { Series } from './data/series';
 import { SearchEntry } from './anisearchEx/searchEntry';
 import { AniSearch } from './anisearchEx/anisearch';
-import {exec} from 'child_process';
-// import {Persister} from 'persiter';
+import { exec } from 'child_process';
+import { logger } from './logger';
 
 
 // APP SETTINGS
 const windowSizePath = "./lastWindow";
 const persPath = "./persPath";
 ///////////////
-// var persister = Persister.getInstance("./");
-// console.log("by main");
-// let wi = new WatchInfo(new Series("asd"));
-// wi.getEpisode();
-// console.log("wi");
 var mainWindow: BrowserWindow;
 var persister: Persister;
 var library:Library;
@@ -45,6 +40,7 @@ function setSaveDir(newSaveDir:string) {
 }
 
 function saveWindowSettings(mainWindow:BrowserWindow) {
+  logger.info("Saving current window size and position");
   var winSettings = {
     "width": mainWindow.getSize()[0],
     "height": mainWindow.getSize()[1],
@@ -60,6 +56,7 @@ function createWindow() {
   var x = undefined
   var y = undefined
   if (fs.existsSync(windowSizePath)) {
+    logger.info("Loaded last window size and position");
     var winSettings = JSON.parse(fs.readFileSync(windowSizePath).toString());
     width = winSettings["width"];
     height = winSettings["height"];
@@ -98,7 +95,7 @@ menu.append(new MenuItem({
       properties: ['openDirectory']
     })
     if (result.filePaths.length == 0) {
-      console.log("No folder seleted");
+      logger.info("No folder seleted");
       return;
     }
     let filePath = path.join(result.filePaths[0], "fileHere").replace("fileHere", "");
@@ -294,7 +291,7 @@ ipcMain.handle("getBackLink", () => {
 
 ipcMain.handle("searchSeries", async (event, searchText) => {
   searchResult = await anisearch.search(searchText);
-  console.log("Num of results: " + searchResult.length);
+  logger.info("Num of results: " + searchResult.length);
   return getSearchResult();
 });
 

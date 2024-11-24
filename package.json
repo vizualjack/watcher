@@ -66,6 +66,7 @@
   "dependencies": {
     "@types/electron": "^1.6.10",
     "base-64": "^1.0.0",
+    "dotenv": "^16.4.5",
     "node-html-parser": "^6.1.5",
     "simple-get": "^4.0.1"
   }

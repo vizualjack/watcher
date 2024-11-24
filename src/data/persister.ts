@@ -4,6 +4,8 @@ import { Library } from './library';
 import { User } from './tracking/user';
 import { WatchInfoPers } from './tracking/watchInfo';
 import { Series } from './series';
+import {logger} from '../logger';
+
 
 const FILE_NAME = "data.json";
 const KEY_SERIES = "librarySeries";
@@ -30,15 +32,16 @@ export class Persister {
             let watchInfoPer = watchInfosPer[i];
             let seriesForId = this.library.getSeriesById(watchInfoPer.seriesId);
             if (seriesForId == null) {
-                console.log("No series for id: " + watchInfoPer.seriesId);
+                logger.debug("No series for id: " + watchInfoPer.seriesId);
                 continue
             }
             this.user.watchInfos.push(watchInfoPer.toWatchInfo(seriesForId));
         }
-        console.log("Loaded data");
+        logger.info("Loaded data");
     }
 
     save() {
+        if (!fs.existsSync(this.savePath)) return;
         let watchInfosPer = [];
         for (let i = 0; i < this.user.watchInfos.length; i++) {
             let watchInfo = this.user.watchInfos[i];
@@ -48,7 +51,7 @@ export class Persister {
         data[KEY_SERIES] = this.library.series;
         data[KEY_WATCHINFOS] = watchInfosPer;
         fs.writeFileSync(this.savePath, JSON.stringify(data));
-        console.log("Data saved");
+        logger.info("Data saved");
     }
 
     #loadWatchInfosPers(onlyDataWatchInfos:WatchInfoPers[]) {

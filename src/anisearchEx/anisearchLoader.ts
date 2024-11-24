@@ -1,5 +1,6 @@
 import {Readable} from 'stream';
 import {IncomingMessage} from 'http';
+import {logger} from '../logger';
 
 const get = require("simple-get");
 
@@ -19,9 +20,9 @@ function load(link:string, cookies:any|undefined) {
         for (let key in cookies) {
             cookieText += `${key}=${cookies[key]}; `;
         }
-        console.log(cookieText);
         headers["Cookie"] = cookieText;
     }
+    logger.debug(`Loading ${link} with headers ${Object.entries(headers)}`);
     return new Promise<IncomingMessage>((resolve, reject) => {
         get({url: link, headers: headers}, function(err:any,res:IncomingMessage) {
             if (err) reject(err);

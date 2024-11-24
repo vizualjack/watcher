@@ -5,3 +5,5 @@ dist
 *.json
 persPath
 lastWindow
+*.log
+/*.html
