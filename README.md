@@ -1,9 +1,9 @@
 # Watcher
-This is a little tool to keep track of your shows progress.
+This is a little tool to keep track of your show progress.
 For now it's only supporting **anime** shows!
 
 It also exist an [android app](https://github.com/vizualjack/WatcherApp).
-Keep in mind that the app **only** provides setting your show's progress.
+Keep in mind that the app **only** provides setting your show progress.
 
 <img src="doc/overview.png" height="500"/> <img src="doc/show.png" height="500"/>
 
